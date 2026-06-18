@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Pulse — Tendencias Semanales en Diseño</title>
+    <meta name="description" content="Resumen semanal de tendencias en Diseño de Producto, Diseño Industrial y Diseño de Experiencias. Junio 2026.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ===== DESIGN TOKENS ===== */
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --border-subtle: rgba(255, 255, 255, 0.06);
+            --border-accent: rgba(255, 255, 255, 0.12);
+            --text-primary: #f0f0f5;
+            --text-secondary: #8a8a9a;
+            --text-muted: #55556a;
+            --accent-coral: #ff6b6b;
+            --accent-amber: #ffa94d;
+            --accent-teal: #38d9a9;
+            --accent-violet: #9775fa;
+            --accent-blue: #4dabf7;
+            --accent-rose: #f06595;
+            --gradient-product: linear-gradient(135deg, #ff6b6b, #ffa94d);
+            --gradient-industrial: linear-gradient(135deg, #38d9a9, #4dabf7);
+            --gradient-ux: linear-gradient(135deg, #9775fa, #f06595);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --shadow-glow: 0 0 80px rgba(151, 117, 250, 0.08);
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--text-muted) transparent;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent-violet);
+            color: white;
+        }
+
+        /* ===== AMBIENT BACKGROUND ===== */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .ambient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .ambient-orb:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: var(--accent-violet);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .ambient-orb:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: var(--accent-coral);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -7s;
+        }
+
+        .ambient-orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-teal);
+            top: 50%;
+            left: 50%;
+            animation-delay: -14s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(40px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(30px, 40px) scale(1.02); }
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(20px, 4vw, 48px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 0 clamp(20px, 4vw, 48px);
+            transition: var(--transition-smooth);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px) saturate(1.5);
+            -webkit-backdrop-filter: blur(20px) saturate(1.5);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .navbar-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-ux);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            color: white;
+            transform: rotate(-5deg);
+            transition: var(--transition-spring);
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(0deg) scale(1.1);
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-fast);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .nav-week-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .nav-week-badge .pulse {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 160px 0 80px;
+            text-align: center;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-eyebrow .dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-teal);
+            border-radius: 50%;
+        }
+
+        .hero h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(42px, 7vw, 88px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 .gradient-text {
+            background: var(--gradient-ux);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-secondary);
+            max-width: 620px;
+            margin: 0 auto 48px;
+            font-weight: 300;
+            line-height: 1.6;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .hero-meta-item {
+            text-align: center;
+        }
+
+        .hero-meta-item .value {
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-product);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-meta-item .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SECTION DIVIDER ===== */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-accent), transparent);
+            margin: 60px 0;
+        }
+
+        /* ===== CATEGORY SECTION ===== */
+        .category-section {
+            padding: 40px 0 80px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .category-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .category-header {
+            margin-bottom: 48px;
+        }
+
+        .category-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 20px;
+        }
+
+        .category-label.product {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent-coral);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .category-label.industrial {
+            background: rgba(56, 217, 169, 0.1);
+            color: var(--accent-teal);
+            border: 1px solid rgba(56, 217, 169, 0.2);
+        }
+
+        .category-label.ux {
+            background: rgba(151, 117, 250, 0.1);
+            color: var(--accent-violet);
+            border: 1px solid rgba(151, 117, 250, 0.2);
+        }
+
+        .category-label .icon {
+            font-size: 14px;
+        }
+
+        .category-title {
+            font-family: var(--font-serif);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .category-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            font-weight: 300;
+        }
+
+        /* ===== HERO IMAGE CARD ===== */
+        .hero-image-card {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-bottom: 48px;
+            position: relative;
+            aspect-ratio: 16/7;
+        }
+
+        .hero-image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .hero-image-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .hero-image-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg-primary) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* ===== TREND CARDS ===== */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+        }
+
+        .trend-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 32px;
+            transition: var(--transition-smooth);
+            cursor: default;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .trend-card.product::before { background: var(--gradient-product); }
+        .trend-card.industrial::before { background: var(--gradient-industrial); }
+        .trend-card.ux::before { background: var(--gradient-ux); }
+
+        .trend-card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-accent);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .trend-card:hover::before {
+            opacity: 1;
+        }
+
+        .trend-card-number {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 16px;
+            opacity: 0.06;
+            position: absolute;
+            top: 20px;
+            right: 24px;
+        }
+
+        .trend-card-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+
+        .trend-card.product .trend-card-tag {
+            background: rgba(255, 107, 107, 0.08);
+            color: var(--accent-coral);
+        }
+
+        .trend-card.industrial .trend-card-tag {
+            background: rgba(56, 217, 169, 0.08);
+            color: var(--accent-teal);
+        }
+
+        .trend-card.ux .trend-card-tag {
+            background: rgba(151, 117, 250, 0.08);
+            color: var(--accent-violet);
+        }
+
+        .trend-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 12px;
+            letter-spacing: -0.3px;
+        }
+
+        .trend-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .trend-card-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .keyword {
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-subtle);
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: var(--transition-fast);
+        }
+
+        .trend-card:hover .keyword {
+            border-color: var(--border-accent);
+            color: var(--text-secondary);
+        }
+
+        /* ===== FEATURED TREND (full-width) ===== */
+        .trend-featured {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .trend-featured .featured-image {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+        }
+
+        .trend-featured .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .trend-featured:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .trend-featured .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* ===== INSIGHTS BAR ===== */
+        .insights-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 60px 0;
+        }
+
+        .insight-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            transition: var(--transition-smooth);
+        }
+
+        .insight-card:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+        }
+
+        .insight-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .insight-value {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+        }
+
+        .insight-card:nth-child(1) .insight-value {
+            background: var(--gradient-product);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .insight-card:nth-child(2) .insight-value {
+            background: var(--gradient-industrial);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .insight-card:nth-child(3) .insight-value {
+            background: var(--gradient-ux);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .insight-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* ===== EVENTS SECTION ===== */
+        .events-section {
+            padding: 60px 0;
+        }
+
+        .events-title {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 16px;
+        }
+
+        .event-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 24px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            transition: var(--transition-smooth);
+        }
+
+        .event-card:hover {
+            border-color: var(--border-accent);
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+
+        .event-date {
+            min-width: 56px;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: var(--radius-sm);
+            background: rgba(151, 117, 250, 0.08);
+            border: 1px solid rgba(151, 117, 250, 0.15);
+        }
+
+        .event-date .month {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-violet);
+            font-weight: 600;
+        }
+
+        .event-date .day {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .event-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .event-info p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .event-badge {
+            margin-left: auto;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .event-badge.upcoming {
+            background: rgba(56, 217, 169, 0.1);
+            color: var(--accent-teal);
+            border: 1px solid rgba(56, 217, 169, 0.2);
+        }
+
+        .event-badge.open {
+            background: rgba(255, 169, 77, 0.1);
+            color: var(--accent-amber);
+            border: 1px solid rgba(255, 169, 77, 0.2);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            padding: 60px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-left p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-left p strong {
+            color: var(--text-secondary);
+        }
+
+        .footer-right {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 44px;
+            height: 44px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition-smooth);
+            z-index: 90;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--border-accent);
+            color: var(--text-primary);
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--gradient-ux);
+            z-index: 200;
+            transition: width 0.1s linear;
+            width: 0%;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .trends-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trend-featured {
+                grid-template-columns: 1fr;
+            }
+
+            .trend-featured .featured-image {
+                aspect-ratio: 16/9;
+            }
+
+            .insights-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-meta {
+                gap: 24px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .trend-card {
+                padding: 24px;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Reading Progress -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <!-- Ambient Background -->
+    <div class="ambient-bg">
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+        <div class="ambient-orb"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">DP</div>
+                <div class="logo-text">Design<span>Pulse</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#producto" class="active">Producto</a></li>
+                <li><a href="#industrial">Industrial</a></li>
+                <li><a href="#experiencias">Experiencias</a></li>
+                <li><a href="#eventos">Eventos</a></li>
+            </ul>
+            <div class="nav-week-badge">
+                <div class="pulse"></div>
+                <span>Semana 25 · Jun 2026</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-eyebrow">
+                <span class="dot"></span>
+                Edición Semanal · 16–22 Junio 2026
+            </div>
+            <h1>
+                Tendencias en<br>
+                <span class="gradient-text">Diseño</span> esta semana
+            </h1>
+            <p class="hero-subtitle">
+                Un resumen curado de los movimientos más relevantes en diseño de producto, diseño industrial y diseño de experiencias. Lo que necesitas saber, sin el ruido.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <div class="value">12</div>
+                    <div class="label">Tendencias</div>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="value">3</div>
+                    <div class="label">Disciplinas</div>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="value">3</div>
+                    <div class="label">Eventos clave</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <!-- ===== PRODUCTO ===== -->
+            <div class="section-divider"></div>
+            <section class="category-section" id="producto">
+                <div class="category-header">
+                    <div class="category-label product">
+                        <span class="icon">◆</span>
+                        Diseño de Producto
+                    </div>
+                    <h2 class="category-title">Del experimento<br>a la integración</h2>
+                    <p class="category-subtitle">La IA deja de ser novedad y se convierte en flujo de trabajo. El diferenciador vuelve a ser el juicio humano.</p>
+                </div>
+
+                <div class="hero-image-card">
+                    <img src="images/hero_product_design.jpg" alt="Product Design Trends">
+                </div>
+
+                <div class="trends-grid">
+                    <div class="trend-card product">
+                        <div class="trend-card-number">01</div>
+                        <div class="trend-card-tag">🔥 En auge</div>
+                        <h3>UX Agéntica: Interfaces que actúan</h3>
+                        <p>La IA ya no es solo una herramienta de productividad; ahora es un participante activo en el producto. Los diseñadores están creando interfaces que verifican intención, explican acciones de la IA y saben cuándo ceder el control al humano.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Agentes IA</span>
+                            <span class="keyword">Verificación de intención</span>
+                            <span class="keyword">Control humano</span>
+                            <span class="keyword">Confianza</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card product">
+                        <div class="trend-card-number">02</div>
+                        <div class="trend-card-tag">🆕 Emergente</div>
+                        <h3>Machine Experience (MX): Diseñar para máquinas</h3>
+                        <p>Los agentes de IA ahora navegan sitios web para resumir contenido y ejecutar tareas. Los diseñadores priorizan HTML semántico, jerarquías claras y etiquetado consistente para que sus productos sean "visibles" e interpretables por estos agentes.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">HTML semántico</span>
+                            <span class="keyword">IA Search</span>
+                            <span class="keyword">Visibilidad</span>
+                            <span class="keyword">Interpretabilidad</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card product">
+                        <div class="trend-card-number">03</div>
+                        <div class="trend-card-tag">↻ Resurgencia</div>
+                        <h3>La corrección "Human-Led"</h3>
+                        <p>Tras un periodo de homogeneidad generada por IA, la industria empuja hacia la originalidad y la estética "imperfecta". El juicio humano es ahora el diferenciador premium: la IA genera opciones, el humano da estrategia, conexión emocional y coherencia de marca.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Originalidad</span>
+                            <span class="keyword">Imperfección</span>
+                            <span class="keyword">Estrategia humana</span>
+                            <span class="keyword">Marca</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card product">
+                        <div class="trend-card-number">04</div>
+                        <div class="trend-card-tag">⚡ Consolidada</div>
+                        <h3>Interfaces Adaptativas y Multimodales</h3>
+                        <p>Los productos digitales se vuelven más dinámicos, con layouts que se adaptan en tiempo real según el comportamiento del usuario. La interacción ya no se limita a pantallas: voz, gesto y movimiento requieren productos conscientes del contexto entre dispositivos.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Adaptativo</span>
+                            <span class="keyword">Multimodal</span>
+                            <span class="keyword">Contexto</span>
+                            <span class="keyword">Voz & Gesto</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== INDUSTRIAL ===== -->
+            <div class="section-divider"></div>
+            <section class="category-section" id="industrial">
+                <div class="category-header">
+                    <div class="category-label industrial">
+                        <span class="icon">▲</span>
+                        Diseño Industrial
+                    </div>
+                    <h2 class="category-title">Sostenibilidad<br>inteligente</h2>
+                    <p class="category-subtitle">La circularidad deja de ser marketing. El diseño generativo y lo biofílico redefinen lo que significa crear productos físicos.</p>
+                </div>
+
+                <div class="hero-image-card">
+                    <img src="images/hero_industrial_design.jpg" alt="Industrial Design Trends">
+                </div>
+
+                <div class="trends-grid">
+                    <div class="trend-card industrial">
+                        <div class="trend-card-number">01</div>
+                        <div class="trend-card-tag">⚡ Consolidada</div>
+                        <h3>IA Generativa y Diseño Paramétrico</h3>
+                        <p>La IA es ya una herramienta estándar para investigación, ideación y prototipado rápido. El modelado paramétrico crea formas orgánicas optimizadas —como estructuras de celosía— que reducen desperdicio de material y mejoran el rendimiento funcional.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Diseño generativo</span>
+                            <span class="keyword">Parametric</span>
+                            <span class="keyword">Lattice</span>
+                            <span class="keyword">Optimización</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card industrial">
+                        <div class="trend-card-number">02</div>
+                        <div class="trend-card-tag">🔥 En auge</div>
+                        <h3>Economía Circular como Obligación</h3>
+                        <p>La sostenibilidad pasó de ser claim de marketing a requisito operativo. Metodologías "cradle-to-cradle" —planificación de fin de vida, transparencia de materiales, reciclabilidad— se integran desde la fase inicial del diseño. La modularidad y reparabilidad son prioridad.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Circularidad</span>
+                            <span class="keyword">Modularidad</span>
+                            <span class="keyword">Reparabilidad</span>
+                            <span class="keyword">Cradle-to-cradle</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card industrial">
+                        <div class="trend-card-number">03</div>
+                        <div class="trend-card-tag">🌿 Creciendo</div>
+                        <h3>Diseño Biofílico y Human-Centric</h3>
+                        <p>Para contrarrestar el mundo digital, los productos incorporan texturas, patrones y formas inspirados en la naturaleza. El diseño inclusivo crea productos accesibles e intuitivos para un rango más amplio de usuarios, reduciendo barreras psicológicas y curvas de aprendizaje.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Biofílico</span>
+                            <span class="keyword">Naturaleza</span>
+                            <span class="keyword">Inclusivo</span>
+                            <span class="keyword">Bienestar</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card industrial">
+                        <div class="trend-card-number">04</div>
+                        <div class="trend-card-tag">🆕 Emergente</div>
+                        <h3>Tecnología Invisible e IoT sin fricción</h3>
+                        <p>La tecnología se vuelve infraestructura, no protagonista. Los productos comunican dentro de ecosistemas IoT sin abrumar al usuario. La tendencia es hacia "performance sin anuncio": funcionalidad que se entrega de forma natural y sin esfuerzo, eliminando pantallas y LEDs innecesarios.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">IoT</span>
+                            <span class="keyword">Invisible</span>
+                            <span class="keyword">Ecosistema</span>
+                            <span class="keyword">Seamless</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== EXPERIENCIAS ===== -->
+            <div class="section-divider"></div>
+            <section class="category-section" id="experiencias">
+                <div class="category-header">
+                    <div class="category-label ux">
+                        <span class="icon">●</span>
+                        Diseño de Experiencias
+                    </div>
+                    <h2 class="category-title">Confianza,<br>no espectáculo</h2>
+                    <p class="category-subtitle">La industria UX prioriza utilidad, transparencia y accesibilidad sobre tendencias visuales superficiales. La calma es el nuevo lujo.</p>
+                </div>
+
+                <div class="hero-image-card">
+                    <img src="images/hero_ux_design.jpg" alt="UX Design Trends">
+                </div>
+
+                <div class="trends-grid">
+                    <div class="trend-card ux">
+                        <div class="trend-card-number">01</div>
+                        <div class="trend-card-tag">🔥 En auge</div>
+                        <h3>Personalización Adaptativa e Intent-Aware</h3>
+                        <p>Las pantallas estáticas se reemplazan por journeys conscientes de la intención del usuario. Las interfaces se adaptan en tiempo real según comportamiento y contexto, pero con controles visibles, resets fáciles y explicaciones claras para mantener la confianza.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Intent-aware</span>
+                            <span class="keyword">Transparencia</span>
+                            <span class="keyword">Agencia del usuario</span>
+                            <span class="keyword">Personalización</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card ux">
+                        <div class="trend-card-number">02</div>
+                        <div class="trend-card-tag">⚡ Consolidada</div>
+                        <h3>Interfaces Multimodales y Espaciales</h3>
+                        <p>El modelo "un usuario, una pantalla" es obsoleto. Las experiencias fluyen entre dispositivos (relojes, phones, autos, TVs) y métodos de input: voz, gesto, tacto y movimiento ocular. El UX espacial usa motion funcionalmente, no decorativamente.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Espacial</span>
+                            <span class="keyword">3D</span>
+                            <span class="keyword">Cross-device</span>
+                            <span class="keyword">Motion design</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card ux">
+                        <div class="trend-card-number">03</div>
+                        <div class="trend-card-tag">📋 Mandato</div>
+                        <h3>Accesibilidad como Estándar Legal</h3>
+                        <p>Con el European Accessibility Act y regulaciones globales similares, la accesibilidad pasa de "buena práctica" a mandato legal. Las organizaciones integran WCAG 2.2+ desde el inicio y abandonan los "overlay widgets" por features nativos y robustos.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">WCAG 2.2+</span>
+                            <span class="keyword">EAA</span>
+                            <span class="keyword">Compliance</span>
+                            <span class="keyword">Nativo</span>
+                        </div>
+                    </div>
+
+                    <div class="trend-card ux">
+                        <div class="trend-card-number">04</div>
+                        <div class="trend-card-tag">↻ Resurgencia</div>
+                        <h3>Interfaces Calmas y Anti-Teatrales</h3>
+                        <p>Los usuarios expresan fatiga ante interfaces abrumadoras. Los patrones actuales priorizan "calm interfaces" con descubrimiento rápido, menos opciones a la vez y defaults más inteligentes. Las imperfecciones humanas intencionales y layouts modulares tipo Bento mejoran la escaneabilidad.</p>
+                        <div class="trend-card-keywords">
+                            <span class="keyword">Calm UI</span>
+                            <span class="keyword">Bento grid</span>
+                            <span class="keyword">Anti-teatral</span>
+                            <span class="keyword">Simplicidad</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== INSIGHTS BAR ===== -->
+            <div class="section-divider"></div>
+            <div class="insights-bar">
+                <div class="insight-card">
+                    <div class="insight-icon">🤖</div>
+                    <div class="insight-value">MX</div>
+                    <div class="insight-label">Machine Experience — El nuevo paradigma transversal a las 3 disciplinas</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">♻️</div>
+                    <div class="insight-value">360°</div>
+                    <div class="insight-label">Circularidad completa — De marketing a obligación operativa</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-icon">🧘</div>
+                    <div class="insight-value">Calm</div>
+                    <div class="insight-label">La calma como estética — El anti-espectáculo gana tracción</div>
+                </div>
+            </div>
+
+            <!-- ===== EVENTOS ===== -->
+            <div class="section-divider"></div>
+            <section class="events-section" id="eventos">
+                <h2 class="events-title">Eventos y noticias clave</h2>
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="month">Jun</div>
+                            <div class="day">23</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Config 2026 — Figma</h4>
+                            <p>23–25 Jun · San Francisco. Nuevos workflows de diseño e integración IA.</p>
+                        </div>
+                        <div class="event-badge upcoming">Próximo</div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="month">Jun</div>
+                            <div class="day">30</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>Shanghai Design 100+</h4>
+                            <p>Convocatoria abierta hasta fin de junio. Innovación + comercio.</p>
+                        </div>
+                        <div class="event-badge open">Abierto</div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-date">
+                            <div class="month">Jun</div>
+                            <div class="day">16</div>
+                        </div>
+                        <div class="event-info">
+                            <h4>DesignRush — Ganadores mensuales</h4>
+                            <p>Premios en web, app y packaging. Foco en simplificación de experiencias complejas.</p>
+                        </div>
+                        <div class="event-badge upcoming">Esta semana</div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-left">
+                    <p><strong>DesignPulse</strong> — Resumen semanal de tendencias en diseño</p>
+                    <p>Semana 25 · 16–22 Junio 2026</p>
+                </div>
+                <div class="footer-right">
+                    Curado con IA + criterio humano
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        const scrollTop = document.getElementById('scrollTop');
+        const readingProgress = document.getElementById('readingProgress');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollY / docHeight) * 100;
+
+            // Navbar
+            navbar.classList.toggle('scrolled', scrollY > 60);
+
+            // Scroll to top button
+            scrollTop.classList.toggle('visible', scrollY > 500);
+
+            // Reading progress
+            readingProgress.style.width = progress + '%';
+        });
+
+        // Intersection Observer for section animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -60px 0px'
+        });
+
+        document.querySelectorAll('.category-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Staggered card animations
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 80);
+                    cardObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.trend-card, .event-card, .insight-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(24px)';
+            card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            cardObserver.observe(card);
+        });
+    </script>
+</body>
+</html>
